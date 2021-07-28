@@ -76,6 +76,7 @@
                     else if (counts > 0) {
                         if (saveCnt % 500 == 0) {
                             saveDict('append', objectID);
+                            clearDict();
                             saveCnt = 0;
                         }
                         saveCnt++;
@@ -102,6 +103,59 @@
             </script>
 
         </head>
+        <style>
+            .func_Div {
+                position: absolute;
+                top: 5%;
+                display: none;
+                text-align: right;
+                margin-left: 35%;
+                border-top: 0.5px solid gray;
+                border-bottom: 0.5px solid gray;
+            }
+            .top-func-div {
+                margin-top: 10px; 
+            }
+            .bottom-func-div {
+                margin-top: 10px;
+                margin-bottom: 10px; 
+            }
+            #function_button_container {
+                border-left: 0.5px solid gray;
+                border-top: 0.5px solid gray;
+                border-bottom: 0.5px solid gray;
+                margin-right: 70%;
+                overflow: auto;
+            }
+            #function_buttons {
+                padding-left: 5%;
+                margin-bottom: -180%;
+            }
+            .function_button {
+                position: relative;
+            }
+            #set_functions_container_cont {
+                position: absolute;
+                border: 0.5px solid gray;
+                border-radius: 3%;
+                background-color: antiquewhite;
+                left: 35%;
+                padding-bottom:45%;
+                padding-right:60%;
+                bottom:5%;
+                overflow:auto;
+            }
+            #set_functions_container {
+                position: absolute;
+                margin-left: 0%;
+                margin-right: 2%;
+            }
+            #set_functions {
+                position:absolute;
+                border: 1px solid red;
+                margin-left:50%;
+            }
+        </style>
         <body>
             
 
@@ -112,6 +166,7 @@
                       <b-navbar-nav>
                         <b-nav-item href="/home">Home</b-nav-item>
                         <b-nav-item href="/graphs">Graphs</b-nav-item>
+                        <b-nav-item href="/tests">TESTS</b-nav-item>
                         <b-nav-item href="/gd">Google Drive</b-nav-item>
                       </b-navbar-nav>
                 
@@ -120,7 +175,7 @@
 
 
                 <b-container>
-                    <b-jumbotron header="ControlPanel" lead="Node.js control panel for PPMS and SR860 Lock-in">
+                    <b-jumbotron header="Control Panel" lead="Node.js control panel for PPMS and SR860 Lock-in">
                         <hr class="my-4">
                     </b-jumbotron>
                 </b-container>
@@ -151,6 +206,134 @@
                         </b-row>
                 </b-container>
 
+                <b-container>
+                    <hr class="my-4">
+                    <div>
+                        <h2>Functions</h2>
+                    </div>
+                    <div>
+                        <!-- <b-button v-b-modal.modal-xl variant="primary">xl modal</b-button> -->
+                        <b-button v-b-modal.modal-lg variant="primary">Select Functions</b-button>
+                        <!-- <b-button v-b-modal.modal-sm variant="primary">sm modal</b-button> -->
+                        
+                        <!-- <b-modal id="modal-xl" size="xl" title="Extra Large Modal">Hello Extra Large Modal!</b-modal> -->
+                        <b-modal id="modal-lg" size="lg" title="Select Functions">
+                            <div>
+                                
+                                <div id = "function_button_container">
+                                    <div id = "function_buttons">
+                                        <b-button onclick = "display_function_div('temp_Div')" class = "my-4 function_button">Ramp to Temperature</b-button>
+                                        <br>
+                                        <b-button onclick = "display_function_div('mag_Div')" class = "my-4 function_button"  >Change Magnetic Field</b-button>
+                                        <br>
+                                        <b-button  class = "my-4 function_button">Function 3 that does <br> a thing </b-button>
+                                        <br>
+                                        <b-button  class = "my-4 function_button">Function 4</b-button>
+                                        <br>
+                                        <b-button  class = "my-4 function_button">Function 5</b-button>
+                                        <br>
+                                        <b-button  class = "my-4 function_button">Function 6</b-button>
+                                        <br>
+                                        <b-button  class = "my-4 function_button">Function 7</b-button>
+                                        <br>
+                                        <b-button  class = "my-4 function_button">Function 8</b-button>
+                                        <br>
+                                        <b-button  class = "my-4 function_button">Function 9</b-button>
+                                        <br>
+                                        <b-button  class = "my-4 function_button">Function 10</b-button>
+                                        <br>
+                                        <b-button  class = "my-4 function_button">Function 11</b-button>
+                                    </div>
+                                </div>
+                                <!-- <b-button onclick = "display_function_div('temp_Div')">Ramp to Temperature</b-button> -->
+                                <div id = "temp_Div" class = "func_Div">
+                                    <form id = "temp_form" name = "temp_form"> 
+                                        <div class = "top-func-div" id = "test_id">
+                                            <label for = "target_temp"><strong>Target Temperature:</strong></label>
+                                            <input
+                                            id = "target_temp"
+                                            name = "target_temp"
+                                            type="text"
+                                            >
+                                        </div>
+                                        <br>
+                                        <div>
+                                            <label for = "temp_rate"><strong>Rate:</strong></label>
+                                            <input
+                                            id = "temp_rate"
+                                            name = "temp_rate"
+                                            type= "text"
+                                            placeholder= "10.00 K/m"
+                                            >
+                                            <label for = "temp_mode"><strong>Mode:</strong></label>
+                                            <input
+                                            id = "temp_mode"
+                                            name = "temp_mode"
+                                            type= "text"
+                                            placeholder= "Fast"
+                                            >
+                                        </div id = pre>
+                                        <div class = "bottom-func-div">
+                                            <button @click = "onSubmit">This button does very little right now</button>
+                                        </div>
+                                        <!-- Acceptable modes: Fast, No Overshoot, and Sweep  -->
+                                    </form>
+                                </div>
+                                <br>
+                                <!-- <b-button onclick = "display_function_div('mag_Div')" class = "my-4 function_button"  >Change Magnetic Field</b-button> -->
+                                    <div id = "mag_Div" class = "func_Div">
+                                            <form id = "mag_form" name = "mag_form"> 
+                                                <div class = "top-func-div">
+                                                    <label for = "target_mag"><strong>Target Magnetic Field:</strong></label>
+                                                    <input
+                                                    id = "target_mag"
+                                                    name = "target_mag"
+                                                    type="text"
+                                                    >
+                                                </div>
+                                                <br>
+                                                <div>
+                                                    <label for = "mag_rate"><strong>Rate:</strong></label>
+                                                    <input
+                                                    id = "mag_rate"
+                                                    name = "mag_rate"
+                                                    type= "text"
+                                                    placeholder= "200 G/m?"
+                                                    >
+                                                    <label for = "mag_mode"><strong>Mode:</strong></label>
+                                                    <input
+                                                    id = "mag_mode"
+                                                    name = "mag_mode"
+                                                    type= "text"
+                                                    placeholder= "Linear"
+                                                    >
+                                                </div>
+                                                <div class = "bottom-func-div">
+                                                    <button @click = "onSubmit">This button does very little right now</button>
+                                                </div>
+                                                <!-- Acceptable modes: Linear and Oscillate -->
+                                            </form>
+                                    </div>
+                                <br>
+                                    
+                                    <div id = "set_functions_container_cont">
+                                        <div id = "set_functions_container">
+                                            <b-container class="record-input">
+                                                <div>
+                                                    <hr class="my-4">
+                                                    <h2>Log</h2>
+                                                    <ul style="list-style-type:none;" id='function_log'></ul>
+                                                </div>
+                                            </b-container> 
+                                        </div>
+                                    </div>
+                            </div>
+                        </b-modal>
+                        <!-- <b-modal id="modal-sm" size="sm" title="Small Modal">Hello Small Modal!</b-modal> -->
+                    </div>
+                </b-container>
+
+                
                 <b-container class="record-input">
                     <hr class="my-4">
                     <div>
@@ -187,6 +370,7 @@
             </div>
 
                 <script>
+                    var number = 0
                     window.app = new Vue({
                         el: '#app',
                         data: {
@@ -202,7 +386,7 @@
                             },
                             onStart(event) {
                                 event.preventDefault()
-                                socket.emit('record', this.time);
+                                // socket.emit('record', this.time);
                                 const myTime = this.time.split(":");
                                 this.log(`Recording data for ${myTime[0]} hour(s) ${myTime[1]} minute(s) ${myTime[2]} second(s)`);
                                 start_recording = true;
@@ -212,6 +396,15 @@
                                 socket.emit('stop-record', this.time)
                                 this.log(`Stopped recording...`);
                                 stop_recording = true;
+                            },
+                            onSubmit(event) {
+                                event.preventDefault()
+                                var item = document.createElement('li');
+                                item.textContent = 'I am intentionally printing something very long to observe the effect that it has on the front-end construction' + number;
+                                item.style.position = 'relative';
+                                item.style.margin = "3px";
+                                number = number + 1;
+                                function_log.appendChild(item);
                             }
                         },
                         computed: {
@@ -220,8 +413,51 @@
                         }
                         }
                     })
-                </script>
-                
-                
+                    //////
+
+                    // Swap visibility
+                    var function_div_list = ["temp_Div","mag_Div"];
+
+                    function display_function_div(ID) {
+                        for (i = 0; i < function_div_list.length; ++i) {
+                            if (function_div_list[i] === ID) {
+                                Swap_Visibility(ID);
+                            } else {
+                                x = document.getElementById(function_div_list[i]);
+                                x.style.display = "none";
+                            }
+                        }
+                    }
+
+                    function Swap_Visibility(ID) {
+                        var x = document.getElementById(ID);
+                        if (x.style.display === "block") {
+                            x.style.display = "none";
+                        } else {
+                            x.style.display = "block";
+                        }
+                        console.log(x.style.display)
+                    }
+
+                    // var form = document.getElementById("temp_form");
+                    // function handleForm(event) { event.preventDefault(); } 
+                    // form.addEventListener('submit', handleForm);
+
+                    // function set_function(event, params)  {
+                    //     event.preventDefault();
+                    // };
+
+                    function log_temp(elt) {
+                        console.log(elt.innerHTML);
+                    };     
+
+                    // var descendents = Father.getElementsByTagName('form');
+                    // console.log(descendents.name)
+
+                    document.getElementById("help").addEventListener("click", function(event){
+                        event.preventDefault();
+                        console.log("hello");
+                    });
+            </script>         
         </body>
 </html>
